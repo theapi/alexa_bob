@@ -4,7 +4,7 @@
   "description": "An experimental audio player.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "theapi",
@@ -16,6 +16,9 @@
   "license": "GPL-3.0",
   "dependencies": {
     "alexa-sdk": "^1.0.6",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "mocha": "^3.2.0",
     "request": "^2.79.0"
   },
   "repository": {
