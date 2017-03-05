@@ -1,0 +1,25 @@
+{
+  "name": "theapi-alexa-bob",
+  "version": "0.0.1",
+  "description": "An experimental audio player.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "theapi",
+    "alexa",
+    "skill",
+    "audio player"
+  ],
+  "author": "https://github.com/theapi",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "alexa-sdk": "^1.0.6",
+    "request": "^2.79.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theapi/alexa_sandbox.git"
+  }
+}
