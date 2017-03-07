@@ -15,7 +15,7 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         this.attributes['token'] = getToken.call(this);
         this.attributes['index'] = getIndex.call(this);
         this.attributes['playbackFinished'] = false;
-        //this.emit(':saveState', true);
+        this.emit(':saveState', true);
     },
     'PlaybackFinished' : function () {
         /*
@@ -25,7 +25,7 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
          */
         this.attributes['playbackFinished'] = true;
         this.attributes['enqueuedToken'] = false;
-        //this.emit(':saveState', true);
+        this.emit(':saveState', true);
     },
     'PlaybackStopped' : function () {
         /*
@@ -36,7 +36,7 @@ var audioEventHandlers = Alexa.CreateStateHandler(constants.states.PLAY_MODE, {
         this.attributes['token'] = getToken.call(this);
         this.attributes['index'] = getIndex.call(this);
         this.attributes['offsetInMilliseconds'] = getOffsetInMilliseconds.call(this);
-        //this.emit(':saveState', true);
+        this.emit(':saveState', true);
     },
     'PlaybackNearlyFinished' : function () {
         /*

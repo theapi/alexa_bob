@@ -6,7 +6,7 @@ module.exports = Object.freeze({
     appId : '',
 
     //  DynamoDB Table name
-    //dynamoDBTableName : 'LongFormAudioSample',
+    dynamoDBTableName : 'Bob',
 
     /*
      *  States:
