@@ -1,22 +1,33 @@
 'use strict';
 
+var config = require('./config.json');
+var request = require("request");
 
-var audioData = [];
 
-var options = {
-  url: config.feedreader,
-  rejectUnauthorized: false,
-  agent: false,
-  headers: {
-    'Authorization' : 'Bearer ' + config.token
-  }
-};
-request.get(options, function(error, response, body) {
-  //console.log(body);
-  var d = JSON.parse(body);
-  if (d.audioData) {
-    audioData = d.audioData;
-  } 
-});
+exports.getAudioData = function (feed, callback) {
 
-module.exports = audioData;
+//@todo static cache
+
+  var data = [];
+  var options = {
+    url: config.feedreader,
+    rejectUnauthorized: false,
+    agent: false,
+    headers: {
+      'Authorization' : 'Bearer ' + config.token
+    }
+  };
+  request.get(options, function(error, response, body) {
+    if (error) {
+      callback(data);
+    } else {
+      //console.log(body);
+      var d = JSON.parse(body);
+      if (d.audioData) {
+        callback(d.audioData);
+      } else {
+        callback(data);
+      }
+    }
+  });
+}

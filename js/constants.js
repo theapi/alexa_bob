@@ -2,9 +2,6 @@
 
 module.exports = Object.freeze({
 
-    // App-ID. TODO: set to your own Skill App ID from the developer portal.
-    appId : '',
-
     //  DynamoDB Table name
     dynamoDBTableName : 'Bob',
 
