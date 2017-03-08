@@ -1,0 +1,5 @@
+{
+    "app_id" : "my_app_id",
+    "feedreader" : "https://www.example.com/feedreader",
+    "token" : "hello_world"
+}
