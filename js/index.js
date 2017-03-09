@@ -6,8 +6,6 @@ var constants = require('./constants');
 var stateHandlers = require('./stateHandlers');
 var audioEventHandlers = require('./audioEventHandlers');
 var config = require('./config.json');
-var audioAssets = require('./audioAssets')
-
 
 exports.handler = function(event, context, callback){
     var alexa = Alexa.handler(event, context);
@@ -20,14 +18,14 @@ exports.handler = function(event, context, callback){
         stateHandlers.resumeDecisionModeIntentHandlers,
         audioEventHandlers
     );
-//console.log(audioAssets.getAudioDataPromise()));
-    // Wait for audio data to load (errm blocking)
-    audioAssets.getAudioDataPromise().then(function (value) {
-        alexa.execute();
-    })
-    .catch(function (reason) {
-        // Erm how to handle the error?
-    });
+// //console.log(audioAssets.getAudioDataPromise()));
+//     // Wait for audio data to load (errm blocking)
+//     audioAssets.getAudioDataPromise().then(function (value) {
+//         alexa.execute();
+//     })
+//     .catch(function (reason) {
+//         // Erm how to handle the error?
+//     });
 
-    //alexa.execute();
+    alexa.execute();
 };

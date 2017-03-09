@@ -178,7 +178,7 @@ module.exports = stateHandlers;
 
 var controller = function () {
     return {
-        play: function () {
+        play: function () { console.log('play');
             /*
              *  Using the function to begin playing audio when:
              *      Play Audio intent invoked.
@@ -195,21 +195,38 @@ var controller = function () {
                 this.attributes['playbackFinished'] = false;
             }
 
-            var token = String(this.attributes['playOrder'][this.attributes['index']]);
-            var playBehavior = 'REPLACE_ALL';
-            var podcast = audioData[this.attributes['playOrder'][this.attributes['index']]];
-            var offsetInMilliseconds = this.attributes['offsetInMilliseconds'];
-            // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
-            this.attributes['enqueuedToken'] = null;
+var that = this;
+            audioAssets.getAudioDataPromise().then(function (value) {
+                audioData = value;
 
-            if (canThrowCard.call(this)) {
-                var cardTitle = 'Playing ' + podcast.title;
-                var cardContent = 'Playing ' + podcast.title;
-                this.response.cardRenderer(cardTitle, cardContent, null);
-            }
+console.log(audioData);
+console.log(that.attributes);
 
-            this.response.audioPlayerPlay(playBehavior, podcast.url, token, null, offsetInMilliseconds);
-            this.emit(':responseReady');
+                var token = String(that.attributes['playOrder'][that.attributes['index']]);
+                var playBehavior = 'REPLACE_ALL';
+                var podcast = audioData[that.attributes['playOrder'][that.attributes['index']]];
+                var offsetInMilliseconds = that.attributes['offsetInMilliseconds'];
+                // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
+                that.attributes['enqueuedToken'] = null;
+
+console.log(podcast);
+console.log(token);
+                if (canThrowCard.call(that)) {
+                    var cardTitle = 'Playing ' + podcast.title;
+                    var cardContent = 'Playing ' + podcast.title;
+                    that.response.cardRenderer(cardTitle, cardContent, null);
+                }
+
+                that.response.audioPlayerPlay(playBehavior, podcast.url, token, null, offsetInMilliseconds);
+                that.emit(':responseReady');
+            })
+            .catch(function (reason) {
+                // Erm how to handle the error?
+                console.log(reason);
+            });
+
+
+
         },
         stop: function () {
             /*

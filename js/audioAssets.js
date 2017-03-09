@@ -21,7 +21,7 @@ function (resolve, reject) {
             // Something went wrong (404 etc.)
             reject(error);
         } else {
-            console.log(options.url);
+            //console.log(options.url);
             var d = JSON.parse(body);
             if (d.audioData) {
                 resolve(d.audioData);
@@ -37,7 +37,7 @@ function (resolve, reject) {
  */
 exports.audioData = function() {
     return audioDataPromise.then(function (value) {
-        console.log(value);
+        //console.log(value);
         return value;
     })
     .catch(function (reason) {
