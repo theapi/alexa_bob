@@ -36,7 +36,7 @@ function (resolve, reject) {
  * Returns the audio data as a JSON object.
  */
 exports.audioData = function() {
-    audioDataPromise.then(function (value) {
+    return audioDataPromise.then(function (value) {
         console.log(value);
         return value;
     })
@@ -44,4 +44,8 @@ exports.audioData = function() {
         console.error('getAudioData failed: ', reason);
         return [];
     });
+}
+
+exports.getAudioDataPromise = function() {
+    return audioDataPromise;
 }
