@@ -4,11 +4,7 @@ var Alexa = require('alexa-sdk');
 var constants = require('./constants');
 var audioAssets = require('./audioAssets');
 
-var audioData = [];
-audioAssets.getAudioData('foo', function(data) {
-    audioData = data;
-    console.log(data);
-});
+var audioData = audioAssets.audioData();
 
 var stateHandlers = {
     startModeIntentHandlers : Alexa.CreateStateHandler(constants.states.START_MODE, {
@@ -20,7 +16,7 @@ var stateHandlers = {
             this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
             this.attributes['index'] = 0;
             this.attributes['offsetInMilliseconds'] = 0;
-            this.attributes['loop'] = true;
+            this.attributes['loop'] = false;
             this.attributes['shuffle'] = false;
             this.attributes['playbackIndexChanged'] = true;
             //  Change state to START_MODE
