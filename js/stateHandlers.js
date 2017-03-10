@@ -13,7 +13,11 @@ var stateHandlers = {
          */
         'LaunchRequest' : function () {
             // Initialize Attributes
-            this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
+            //this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
+
+            // Fake the ordering for now.
+            this.attributes['playOrder'] = Array.apply(null, {length: 1}).map(Number.call, Number);
+
             this.attributes['index'] = 0;
             this.attributes['offsetInMilliseconds'] = 0;
             this.attributes['loop'] = false;
@@ -31,7 +35,12 @@ var stateHandlers = {
         'PlayAudio' : function () {
             if (!this.attributes['playOrder']) {
                 // Initialize Attributes if undefined.
-                this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
+                //this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
+                // Fake the length for now.
+                this.attributes['playOrder'] = Array.apply(null, {length: 1}).map(Number.call, Number);
+
+
+
                 this.attributes['index'] = 0;
                 this.attributes['offsetInMilliseconds'] = 0;
                 this.attributes['loop'] = false;
@@ -195,7 +204,7 @@ var controller = function () {
                 this.attributes['playbackFinished'] = false;
             }
 
-var that = this;
+            var that = this;
             audioAssets.getAudioDataPromise().then(function (value) {
                 audioData = value;
 
@@ -204,6 +213,7 @@ console.log(that.attributes);
 
                 var token = String(that.attributes['playOrder'][that.attributes['index']]);
                 var playBehavior = 'REPLACE_ALL';
+
                 var podcast = audioData[that.attributes['playOrder'][that.attributes['index']]];
                 var offsetInMilliseconds = that.attributes['offsetInMilliseconds'];
                 // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
@@ -223,6 +233,7 @@ console.log(token);
             .catch(function (reason) {
                 // Erm how to handle the error?
                 console.log(reason);
+                that.emit(':tell', reason);
             });
 
 
@@ -324,7 +335,10 @@ console.log(token);
                 this.attributes['shuffle'] = false;
                 // Although changing index, no change in audio file being played as the change is to account for reordering playOrder
                 this.attributes['index'] = this.attributes['playOrder'][this.attributes['index']];
-                this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
+                //this.attributes['playOrder'] = Array.apply(null, {length: audioData.length}).map(Number.call, Number);
+                // Fake the play oreder for now.
+                this.attributes['playOrder'] = Array.apply(null, {length: 1}).map(Number.call, Number);
+
             }
             controller.play.call(this);
         },
