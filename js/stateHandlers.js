@@ -2,6 +2,7 @@
 
 var Alexa = require('alexa-sdk');
 var constants = require('./constants');
+var config = require('./config.json');
 var audioAssets = require('./audioAssets');
 
 var audioData = audioAssets.audioData();
@@ -26,7 +27,8 @@ var stateHandlers = {
             //  Change state to START_MODE
             this.handler.state = constants.states.START_MODE;
 
-            var message = 'Welcome to Bob. You can say, play the audio to begin the podcast.';
+            var message = `Welcome to the ${config.podcastName} podcast.
+            You can say, play the audio to begin the podcast.`;
             var reprompt = 'You can say, play the audio, to begin.';
 
             this.response.speak(message).listen(reprompt);
@@ -52,7 +54,8 @@ var stateHandlers = {
             controller.play.call(this);
         },
         'AMAZON.HelpIntent' : function () {
-            var message = 'Welcome to the Bob Podcast player. You can say, play the audio, to begin the podcast.';
+            var message = `This is the ${config.podcastName} player.
+            You can say, play the audio, to begin the podcast.`;
             this.response.speak(message).listen(message);
             this.emit(':responseReady');
         },
@@ -93,11 +96,12 @@ var stateHandlers = {
             var reprompt;
             if (this.attributes['playbackFinished']) {
                 this.handler.state = constants.states.START_MODE;
-                message = 'Welcome to the Bob Podcast player. You can say, play the audio to begin the podcast.';
+                message = `Welcome to the ${config.podcastName} Podcast player.
+                You can say, play the audio to begin the podcast.`;
                 reprompt = 'You can say, play the audio, to begin.';
             } else {
                 this.handler.state = constants.states.RESUME_DECISION_MODE;
-                message = 'You were listening to ' + audioData[this.attributes['playOrder'][this.attributes['index']]].title +
+                message = 'You were listening to ' + this.attributes['podcastTitle'] +
                     ' Would you like to resume?';
                 reprompt = 'You can say yes to resume or no to play from the top.';
             }
@@ -119,8 +123,9 @@ var stateHandlers = {
         'AMAZON.StartOverIntent' : function () { controller.startOver.call(this) },
         'AMAZON.HelpIntent' : function () {
             // This will called while audio is playing and a user says "ask <invocation_name> for help"
-            var message = 'You are listening to the Bob Podcast player. You can say, Next or Previous to navigate through the playlist. ' +
-                'At any time, you can say Pause to pause the audio and Resume to resume.';
+            var message = `You are listening to the ${config.podcastName} Podcast player.
+            You can say, Next or Previous to navigate through the playlist.
+            At any time, you can say Pause to pause the audio and Resume to resume.`;
             this.response.speak(message).listen(message);
             this.emit(':responseReady');
         },
@@ -147,7 +152,7 @@ var stateHandlers = {
          *  All Intent Handlers for state : RESUME_DECISION_MODE
          */
         'LaunchRequest' : function () {
-            var message = 'You were listening to ' + audioData[this.attributes['playOrder'][this.attributes['index']]].title +
+            var message = 'You were listening to ' + this.attributes['podcastTitle'] +
                 ' Would you like to resume?';
             var reprompt = 'You can say yes to resume or no to play from the top.';
             this.response.speak(message).listen(reprompt);
@@ -156,7 +161,7 @@ var stateHandlers = {
         'AMAZON.YesIntent' : function () { controller.play.call(this) },
         'AMAZON.NoIntent' : function () { controller.reset.call(this) },
         'AMAZON.HelpIntent' : function () {
-            var message = 'You were listening to ' + audioData[this.attributes['index']].title +
+            var message = 'You were listening to ' + this.attributes['podcastTitle'] +
                 ' Would you like to resume?';
             var reprompt = 'You can say yes to resume or no to play from the top.';
             this.response.speak(message).listen(reprompt);
@@ -220,12 +225,14 @@ console.log(that.attributes);
                 that.attributes['enqueuedToken'] = null;
 
 console.log(podcast);
-console.log(token);
                 if (canThrowCard.call(that)) {
                     var cardTitle = 'Playing ' + podcast.title;
                     var cardContent = 'Playing ' + podcast.title;
                     that.response.cardRenderer(cardTitle, cardContent, null);
                 }
+
+                that.attributes['podcastUrl'] = podcast.url;
+                that.attributes['podcastTitle'] = podcast.title;
 
                 that.response.audioPlayerPlay(playBehavior, podcast.url, token, null, offsetInMilliseconds);
                 that.emit(':responseReady');

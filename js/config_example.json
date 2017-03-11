@@ -2,5 +2,6 @@
     "app_id" : "my_app_id",
     "feedreader" : "https://www.example.com/feedreader/embeddedfm",
     "token" : "hello_world",
-    "dynamoDBTableName" : "bob"
+    "dynamoDBTableName" : "bob",
+    "podcastName" : "Bob"
 }
