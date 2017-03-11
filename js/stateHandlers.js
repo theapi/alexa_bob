@@ -349,6 +349,7 @@ console.log(token);
         },
         reset: function () {
             // Reset to top of the playlist.
+            this.attributes['playbackFinished'] = true; // force a reload of the audio data.
             this.attributes['index'] = 0;
             this.attributes['offsetInMilliseconds'] = 0;
             this.attributes['playbackIndexChanged'] = true;
