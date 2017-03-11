@@ -10,7 +10,7 @@ var config = require('./config.json');
 exports.handler = function(event, context, callback){
     var alexa = Alexa.handler(event, context);
     alexa.appId = config.app_id;
-    alexa.dynamoDBTableName = constants.dynamoDBTableName;
+    alexa.dynamoDBTableName = config.dynamoDBTableName;
     alexa.registerHandlers(
         stateHandlers.startModeIntentHandlers,
         stateHandlers.playModeIntentHandlers,

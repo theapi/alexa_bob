@@ -1,5 +1,6 @@
 {
     "app_id" : "my_app_id",
-    "feedreader" : "https://www.example.com/feedreader",
-    "token" : "hello_world"
+    "feedreader" : "https://www.example.com/feedreader/embeddedfm",
+    "token" : "hello_world",
+    "dynamoDBTableName" : "bob"
 }

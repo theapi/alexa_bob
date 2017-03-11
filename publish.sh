@@ -5,4 +5,4 @@ rm index.zip
 cd js
 zip -X -r ../index.zip *
 cd ..
-aws lambda update-function-code --function-name bob --zip-file fileb://index.zip
+aws lambda update-function-code --function-name embeddedfm --zip-file fileb://index.zip
