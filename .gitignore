@@ -1,6 +1,7 @@
 index.zip
-config.json
+*.config.json
 config.php
+config.json
 
 # Logs
 logs

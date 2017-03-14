@@ -3,6 +3,7 @@
 
 rm index.zip
 cd js
+cp theamphour.config.json config.json
 zip -X -r ../index.zip *
 cd ..
-aws lambda update-function-code --function-name bob --zip-file fileb://index.zip
+aws lambda update-function-code --function-name theamphour --zip-file fileb://index.zip

@@ -2,9 +2,6 @@
 
 module.exports = Object.freeze({
 
-    //  DynamoDB Table name
-    dynamoDBTableName : 'Bob',
-
     /*
      *  States:
      *  START_MODE : Welcome state when the audio list has not begun.
