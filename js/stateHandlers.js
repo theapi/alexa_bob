@@ -4,7 +4,6 @@ var Alexa = require('alexa-sdk');
 var constants = require('./constants');
 var config = require('./config.json');
 var audioAssets = require('./audioAssets');
-
 var audioData = audioAssets.audioData();
 
 var stateHandlers = {
@@ -102,7 +101,7 @@ var stateHandlers = {
             } else {
                 this.handler.state = constants.states.RESUME_DECISION_MODE;
                 message = 'You were listening to ' + this.attributes['podcastTitle'] +
-                    ' Would you like to resume?';
+                    '. Would you like to resume?';
                 reprompt = 'You can say yes to resume or no to play from the top.';
             }
 
@@ -153,7 +152,7 @@ var stateHandlers = {
          */
         'LaunchRequest' : function () {
             var message = 'You were listening to ' + this.attributes['podcastTitle'] +
-                ' Would you like to resume?';
+                '. Would you like to resume?';
             var reprompt = 'You can say yes to resume or no to play from the top.';
             this.response.speak(message).listen(reprompt);
             this.emit(':responseReady');
@@ -162,7 +161,7 @@ var stateHandlers = {
         'AMAZON.NoIntent' : function () { controller.reset.call(this) },
         'AMAZON.HelpIntent' : function () {
             var message = 'You were listening to ' + this.attributes['podcastTitle'] +
-                ' Would you like to resume?';
+                '. Would you like to resume?';
             var reprompt = 'You can say yes to resume or no to play from the top.';
             this.response.speak(message).listen(reprompt);
             this.emit(':responseReady');
@@ -214,7 +213,7 @@ var controller = function () {
                 audioData = value;
 
 console.log(audioData);
-console.log(that.attributes);
+//console.log(that.attributes);
 
                 var token = String(that.attributes['playOrder'][that.attributes['index']]);
                 var playBehavior = 'REPLACE_ALL';
@@ -224,7 +223,11 @@ console.log(that.attributes);
                 // Since play behavior is REPLACE_ALL, enqueuedToken attribute need to be set to null.
                 that.attributes['enqueuedToken'] = null;
 
-console.log(podcast);
+console.log(podcast.title);
+console.log(playBehavior);
+console.log(podcast.url);
+console.log(token);
+console.log(offsetInMilliseconds);
                 if (canThrowCard.call(that)) {
                     var cardTitle = 'Playing ' + podcast.title;
                     var cardContent = 'Playing ' + podcast.title;

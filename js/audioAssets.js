@@ -11,10 +11,10 @@ function (resolve, reject) {
     var options = {
         url: config.feedreader,
         rejectUnauthorized: false,
-        agent: false,
-        headers: {
-            'Authorization' : 'Bearer ' + config.token
-        }
+        // agent: false,
+        // headers: {
+        //     'Authorization' : 'Bearer ' + config.token
+        // }
     };
     request.get(options, function(error, response, body) {
         if (error) {
