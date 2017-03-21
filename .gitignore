@@ -3,6 +3,9 @@ index.zip
 config.php
 config.json
 
+// Composer
+vendor
+
 # Logs
 logs
 *.log
