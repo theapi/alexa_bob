@@ -23,8 +23,11 @@ try {
     );
 
     $feed = $parser->execute();
+    $etag = $resource->getEtag();
+    $last_modified = $resource->getLastModified();
+    echo "etag: $etag last_modified: $last_modified\n";
     foreach ($feed->items as $item) {
-        echo $item->getTitle() . ',' . $item->getEnclosureUrl() . "\n";
+        //echo $item->getTitle() . ',' . $item->getEnclosureUrl() . "\n";
 
     }
 

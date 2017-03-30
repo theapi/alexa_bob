@@ -1,5 +1,7 @@
 <?php
 // sudo apt install sqlite3 php5-sqlite
+// sudo apt install sqlite3 php-sqlite3
+
 
 Class Db extends PDO {
     protected $db;
@@ -14,10 +16,32 @@ Class Db extends PDO {
     public function init() {
         $sql = "
         CREATE TABLE IF NOT EXISTS audio_data (
-            etag TEXT,
-            last_modified TEXT
+            title TEXT,
+            url TEXT,
+            date INTEGER
         );";
         $this->db->exec($sql);
+    }
+
+    public function addAudioData($title, $url, $date) {
+        $stmt = $db->prepare(
+            "INSERT INTO audio_data(title, url, date)
+             VALUES(:title, :url, :date)"
+         );
+         $stmt->execute(array(
+             ':title' => $title,
+             ':url' => $url,
+             ':date' => $date,
+         ));
+    }
+
+    public function getLatest() {
+        $stmt = $db->query(
+            'SELECT title, url FROM audio_data
+            ORDER BY date DESC
+            Limit 3'
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

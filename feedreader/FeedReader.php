@@ -15,6 +15,7 @@ Class FeedReader {
     public function getAudioData() {
         try {
 
+            //see https://github.com/fguillot/picoFeed/blob/master/docs/feed-parsing.markdown
             $reader = new Reader;
             $resource = $reader->download($this->url);
 
@@ -30,6 +31,8 @@ Class FeedReader {
                 $data['title'] = $item->getTitle();
                 $data['url'] = str_replace('http:', 'https:', $item->getEnclosureUrl());
                 $this->out['audioData'][] = $data;
+                // For the db cache.
+                $data['date'] = date('U', $data['date']);
             }
             return json_encode($this->out);
         }
