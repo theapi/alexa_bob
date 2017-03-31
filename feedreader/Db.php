@@ -58,10 +58,10 @@ Class Db extends PDO {
     }
 }
 
-try {
-    $db = new Db('theamphour');
-    $db->init();
-} catch(PDOException $e) {
-    echo $e->getMessage();
-    echo $e->getTraceAsString();
-}
+// try {
+//     $db = new Db('theamphour');
+//     $db->init();
+// } catch(PDOException $e) {
+//     echo $e->getMessage();
+//     echo $e->getTraceAsString();
+// }

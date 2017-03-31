@@ -1,8 +1,8 @@
 <?php
-require '../Db.php';
+require dirname(__DIR__) . '/Db.php';
 
 try {
-    $db = new Db('theamphour');
+    $db = new Db(__DIR__ . '/theamphour');
     $db->init();
 
     $latest = $db->getLatest();

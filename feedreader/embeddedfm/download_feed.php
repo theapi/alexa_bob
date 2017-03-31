@@ -1,9 +1,9 @@
 <?php
-require '../Db.php';
-require '../FeedReader.php';
+require dirname(__DIR__) . '/Db.php';
+require dirname(__DIR__) . '/FeedReader.php';
 
 try {
-    $db = new Db('embeddedfm');
+    $db = new Db(__DIR__ . '/embeddedfm');
     $db->init();
 
     $reader = new FeedReader('http://embedded.fm/?format=rss', $db);
