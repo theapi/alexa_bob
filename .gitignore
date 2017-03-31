@@ -3,6 +3,8 @@ index.zip
 config.php
 config.json
 
+*.db
+
 // Composer
 vendor
 

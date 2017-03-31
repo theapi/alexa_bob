@@ -5,11 +5,13 @@ use PicoFeed\Reader\Reader;
 
 Class FeedReader {
     protected $url;
+    protected $db;
 
     protected $out = ['audioData' => []];
 
-    public function __construct($url) {
+    public function __construct($url, $db = null) {
         $this->url = $url;
+        $this->db = $db;
     }
 
     public function getAudioData() {
@@ -32,9 +34,16 @@ Class FeedReader {
                 $data['url'] = str_replace('http:', 'https:', $item->getEnclosureUrl());
                 $this->out['audioData'][] = $data;
                 // For the db cache.
-                $data['date'] = date('U', $data['date']);
+                $data['date'] = $item->getPublishedDate()->format('U');
+
+                if ($this->db instanceof PDO) {
+                    if (!$this->db->itemExists($data['title'])) {
+                        echo "Adding " . $data['title'] . "\n";
+                        $this->db->addAudioData($data['title'], $data['url'], $data['date']);
+                    }
+                }
             }
-            return json_encode($this->out);
+            //return json_encode($this->out);
         }
         catch (Exception $e) {
             // Do something...

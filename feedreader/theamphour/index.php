@@ -1,23 +1,18 @@
 <?php
-require '../FeedReader.php';
+require '../Db.php';
 
-// http://theamphour.com/feed/podcast/
-// $json = '
-// {
-//     "audioData": [
-//         {
-//             "title": "#339, Look at nature and meet nerds",
-//             "url" : "https://traffic.libsyn.com/theamphour/TheAmpHour-339-LookAtNatureAndMeetNerds.mp3"
-//         },
-//         {
-//             "title": "#338, An Interview with Jørgen Jakobsen",
-//             "url" : "https://traffic.libsyn.com/theamphour/TheAmpHour-338-AnInterviewWithJorgenJakobsen.mp3"
-//         }
-//     ]
-// }
-// ';
+try {
+    $db = new Db('theamphour');
+    $db->init();
 
-$reader = new FeedReader('http://theamphour.com/feed/podcast/');
+    $latest = $db->getLatest();
+
+    $audio_data  = json_encode(["audioData" => $latest]);
+
+} catch (PDOException $e) {
+    //echo $e->getMessage();
+    //echo $e->getTraceAsString();
+}
 
 header('Content-Type: application/json');
-print $reader->getAudioData();
+print $audio_data;

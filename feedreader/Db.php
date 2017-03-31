@@ -23,8 +23,21 @@ Class Db extends PDO {
         $this->db->exec($sql);
     }
 
+    public function itemExists($title) {
+        $stmt = $this->db->query(
+            'SELECT date FROM audio_data
+            WHERE title = :title'
+        );
+        $stmt->execute([':title' => $title]);
+        if ($stmt->fetchColumn() > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function addAudioData($title, $url, $date) {
-        $stmt = $db->prepare(
+        $stmt = $this->db->prepare(
             "INSERT INTO audio_data(title, url, date)
              VALUES(:title, :url, :date)"
          );
@@ -36,7 +49,7 @@ Class Db extends PDO {
     }
 
     public function getLatest() {
-        $stmt = $db->query(
+        $stmt = $this->db->query(
             'SELECT title, url FROM audio_data
             ORDER BY date DESC
             Limit 3'
